@@ -1,12 +1,12 @@
-risazip = function(zip, path = getwd())
+risazip = function(zip, path = getwd(), ...)
 {
   d = unzip(zipfile = zip, exdir = extract <- path)
-  isaobj = risatab(path)
+  isaobj = risatab(path, ...)
   return(isaobj)
 }##end function risazip
 
 
-risatab = function(path = getwd())
+risatab = function(path = getwd(), ...)
 {
   d = dir(path)
 
@@ -94,10 +94,10 @@ risatab = function(path = getwd())
               if(length(grep("Factor.Value", colnames(metadata))) != 0) {
                 ## If there are explicit factors, use them
                 sclass=metadata[which(metadata$Sample.Name %in% pd$Sample.Name),grep("Factor.Value", colnames(metadata))[1]]
-                  isa[[i]] = xcmsSet(files=msfiles, sclass=sclass)
+                  isa[[i]] = xcmsSet(files=msfiles, sclass=sclass, ...)
                 } else {
                   ## Otherwise just use what was there
-                  isa[[i]] = try(xcmsSet(msfiles, phenoData=pData(pd)))
+                  isa[[i]] = try(xcmsSet(files=msfiles, phenoData=pData(pd), ...))
                 }
 
             }			
